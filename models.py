@@ -1,8 +1,8 @@
-
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+DEFAULT_IMAGE_URL = "https://img.favpng.com/17/6/12/rescue-dog-cat-animal-shelter-clip-art-png-favpng-Gt1HiZ98GPyWH2U8q7AquVtyC.jpg"
 
 def connect_db(app):
     """Connect to DB"""
@@ -20,7 +20,11 @@ class Pet(db.Model):
     name = db.Column(db.Text,
                      nullable=False)
     species = db.Column(db.Text, nullable=False)
-    photo_url = db.Column(db.Text, nullable=True)
+    photo = db.Column(db.Text, nullable=True)
     age = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
-    available = db.Column(db.Boolean, default='available', nullable=False)
+    available = db.Column(db.Boolean, default=True, nullable=False)
+    
+    
+    def photo_url(self):
+        return self.photo or DEFAULT_IMAGE_URL
